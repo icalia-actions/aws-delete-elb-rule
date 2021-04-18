@@ -1,5 +1,6 @@
 name: AWS Delete ELB Rule
 description: Deletes an AWS ELB using either a Rule ARN or the matching rules to remove
+author: Icalia Labs
 
 branding:
   icon: activity
