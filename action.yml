@@ -1,0 +1,34 @@
+name: AWS Delete ELB Rule
+description: Deletes an AWS ELB using either a Rule ARN or the matching rules to remove
+
+branding:
+  icon: activity
+  color: red
+
+inputs:
+  rule-arn:
+    description: The Amazon Resource Name (ARN) of the rule.
+    required: false
+  listener:
+    description: The Amazon Resource Name (ARN) of the listener.
+    required: false
+  conditions:
+    description: The conditions (in JSON array format used by AWS).
+    required: false
+  actions:
+    description: The actions.
+    required: false
+  tags:
+    description: The tags to assign to the rule.
+    required: false
+  fail-if-no-match:
+    description: Fails the action if a rule is not found using the given matchers
+    required: false
+
+outputs:
+  rule-arn:
+    description: ARN of the deleted ELB Rule
+
+runs:
+  using: node12
+  main: index.js

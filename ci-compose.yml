@@ -1,0 +1,31 @@
+# We'll use the '3.x spec since it supports the 'cache_from'
+# option:
+version: '3.7'
+
+volumes:
+  node_modules:
+
+services:
+  tests: &lib
+    image: icalia-actions/aws-delete-elb-rule:testing-latest
+    build: &lib_build
+      target: testing
+      context: .
+      args:
+        APP_PATH: ${PWD:-/icalia-actions/aws-delete-elb-rule}
+        DEVELOPER_UID: ${UID:-1000}
+        DEVELOPER_USERNAME: ${USER:-you}
+    command: yarn test
+    volumes:
+      - .:${PWD:-/icalia-actions/aws-delete-elb-rule}
+      - node_modules:${PWD:-/icalia-actions/aws-delete-elb-rule}/node_modules
+
+  publisher:
+    <<: *lib
+    image: icalia-actions/aws-delete-elb-rule:latest
+    build:
+      <<: *lib_build
+      target: release
+    command: yarn publish --non-interactive --access public
+    environment:
+      NPM_AUTH_TOKEN: ${NPM_AUTH_TOKEN}
